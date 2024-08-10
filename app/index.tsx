@@ -1,22 +1,37 @@
-import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
+import Loading from "@/src/components/Loading";
 
 export default function App() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text>Name</Text>
+      <Image
+        source={require("../assets/images/loginIcon.png")}
+        style={styles.logo}
+      />
+      <Text>Email</Text>
       <TextInput
-        placeholder="Enter your name"
+        inputMode="email"
+        placeholder="Enter your email"
         style={styles.textInputStyle}
         onChangeText={setName}
         value={name}
       />
-      <Text>Surname</Text>
+      <Text>Password</Text>
       <TextInput
-        placeholder="Enter your surname"
+        secureTextEntry={true}
+        placeholder="Enter your password"
         style={styles.textInputStyle}
         onChangeText={setSurname}
         value={surname}
@@ -27,10 +42,11 @@ export default function App() {
           { backgroundColor: pressed ? "gray" : "blue" },
           styles.button,
         ]}
-        onPress={() => alert(`Hello ${name} ${surname}`)}
+        onPress={() => {setLoading(true)}}
       >
         <Text style={styles.buttonText}>Submit</Text>
       </Pressable>
+      {loading ? <Loading setLoading={setLoading} /> : null}
     </View>
   );
 }
@@ -55,10 +71,14 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonText: {
     fontWeight: "bold",
     color: "white",
+  },
+  logo: {
+    width: 100,
+    height: 100,
   },
 });
