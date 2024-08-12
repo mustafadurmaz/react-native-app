@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import Loading from "@/src/components/Loading";
 
-const Loginpage = () => {
+const Loginpage = ({navigation}: {navigation: any}) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,6 +48,18 @@ const Loginpage = () => {
       >
         <Text style={styles.buttonText}>Submit</Text>
       </Pressable>
+
+      <Pressable
+        style={({ pressed }) => [
+          { backgroundColor: pressed ? "gray" : "lightgray", marginTop: 50 },
+          styles.signupButton,
+        ]}
+        onPress={() => {
+          navigation.navigate("SignUp");
+        }}
+      >
+        <Text style={styles.buttonText}>Signup</Text>
+      </Pressable>
       {loading ? <Loading setLoading={setLoading} /> : null}
     </View>
   );
@@ -82,6 +94,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+  },
+  signupButton: {
+    width: "30%",
+    height: 50,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
