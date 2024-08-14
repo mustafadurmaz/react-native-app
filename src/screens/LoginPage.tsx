@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import Loading from "@/src/components/Loading";
 
-const Loginpage = ({navigation}: {navigation: any}) => {
+const Loginpage = ({ navigation }: { navigation: any }) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,22 +20,27 @@ const Loginpage = ({navigation}: {navigation: any}) => {
         source={require("../../assets/images/loginIcon.png")}
         style={styles.logo}
       />
-      <Text>Email</Text>
-      <TextInput
-        inputMode="email"
-        placeholder="Enter your email"
-        style={styles.textInputStyle}
-        onChangeText={setName}
-        value={name}
-      />
-      <Text>Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        placeholder="Enter your password"
-        style={styles.textInputStyle}
-        onChangeText={setSurname}
-        value={surname}
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputBoxText}>Email</Text>
+        <TextInput
+          inputMode="email"
+          placeholder="Enter your email"
+          style={styles.textInputStyle}
+          onChangeText={setName}
+          value={name}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputBoxText}>Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          placeholder="Enter your password"
+          style={styles.textInputStyle}
+          onChangeText={setSurname}
+          value={surname}
+        />
+      </View>
 
       <Pressable
         style={({ pressed }) => [
@@ -72,8 +77,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  inputContainer: {
+    width: "80%",
+  },
   textInputStyle: {
-    borderWidth: 1,
+    borderBottomWidth: 0.5,
     width: "80%",
     height: 50,
     borderRadius: 10,
@@ -101,6 +109,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  inputBoxText: {
+    fontWeight: "bold",
+    alignSelf: "flex-start",
   },
 });
 
