@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     borderBottomWidth: 0.5,
-    width: "80%",
+    width: "100%",
     height: 50,
     borderRadius: 10,
     marginVertical: 10,
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
   },
   buttonText: {
     fontWeight: "bold",
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
+    marginBottom: 20,
   },
   signupButton: {
     width: "30%",
