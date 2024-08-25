@@ -5,12 +5,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Loading, CustomTextInput, CustomButton } from "@/src/components";
+import { useSelector, useDispatch } from "react-redux";
+import { setEmail, setPassword, setLoading, setLogin } from "@/src/redux/userSlice";
 
 const Loginpage = ({ navigation }: { navigation: any }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  // userSlice içerisindeki verileri almak için useSelector kullanılır.
+  const {email, password, loading} = useSelector((state: any) => state.user);
+
+  // userSlice içerisindeki verileri değiştirmek için useDispatch kullanılır.
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -22,7 +26,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleOnChangeText={setEmail}
+        handleOnChangeText={(text)=>dispatch(setEmail(text))}
         handleValue={email}
         handlePlaceholder="Enter your email"
       />
@@ -30,7 +34,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
       <CustomTextInput
         title="Password"
         isSecureText={true}
-        handleOnChangeText={setPassword}
+        handleOnChangeText={(password)=>dispatch(setPassword(password))}
         handleValue={password}
         handlePlaceholder="Enter your password"
       />
@@ -39,7 +43,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         title="Login"
         setWidth="80%"
         handleOnPress={() => {
-          setLoading(true);
+          dispatch(setLogin());
         }}
         buttonColor="blue"
         pressetButtonColor="gray"
@@ -55,7 +59,9 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         pressetButtonColor="lightgray"
       />
 
-      {loading ? <Loading setLoading={setLoading} /> : null}
+      {loading ? <Loading setLoading={
+        () => dispatch(setLoading(false))
+      } /> : null}
     </View>
   );
 };
