@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const RootNavigation = () => {
 
-  const isAuth = useSelector((state: any) => state.user);
+  const isAuth = useSelector((state: any) => state.user.isAuth);
 
   // const isAuth = false;
 
