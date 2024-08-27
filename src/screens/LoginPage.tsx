@@ -6,12 +6,13 @@ import {
 import React, { useState } from "react";
 import { Loading, CustomTextInput, CustomButton } from "@/src/components";
 import { useSelector, useDispatch } from "react-redux";
-import { setEmail, setPassword, setLoading, setLogin } from "@/src/redux/userSlice";
+import { setEmail, setPassword, setLoading } from "@/src/redux/userSlice";
+import {login} from "@/src/redux/userSlice";
 
 const Loginpage = ({ navigation }: { navigation: any }) => {
 
   // userSlice içerisindeki verileri almak için useSelector kullanılır.
-  const {email, password, loading} = useSelector((state: any) => state.user);
+  const {email, password, loading}  = useSelector((state: any) => state.user);
 
   // userSlice içerisindeki verileri değiştirmek için useDispatch kullanılır.
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         title="Login"
         setWidth="80%"
         handleOnPress={() => {
-          dispatch(setLogin());
+          dispatch(login({email, password}));
         }}
         buttonColor="blue"
         pressetButtonColor="gray"
