@@ -44,7 +44,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         title="Login"
         setWidth="80%"
         handleOnPress={() => {
-          dispatch(login({email, password}));
+          dispatch(login({email, password}) as any);
         }}
         buttonColor="blue"
         pressetButtonColor="gray"

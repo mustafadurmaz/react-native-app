@@ -3,12 +3,12 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const login = createAsyncThunk(
   "user/login",
-  async ({ username, password }: { username: any; password: any }) => {
+  async ({ email, password }: { email: string, password: string }) => {
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        username,
+        email,
         password
       );
       const user = userCredential.user;
