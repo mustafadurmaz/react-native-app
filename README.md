@@ -1,50 +1,65 @@
-# Welcome to your Expo app 👋
+![Expo Router Typescript](https://thedevenvironment.com/expo-router-typescript.png)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+**INTRODUCTION**
 
-1. Install dependencies
+This repo is a scaffolding of an Expo application that uses Expo Router and it's file based routing capibilities. It has all the necessary packages needed to just start the application and begin adding routes.
 
-   ```bash
-   npm install
-   ```
+The reason it exists is to mitigate the amount of work needed to add typescript, jest, absolute imports and eslint into the traditional quickstart that the "create-expo-app" CLI command provides.
 
-2. Start the app
+Two sample screens have been created, so everything will run out of the box. Also a number of useful scripts have been created in the package.json that allow the ability to run, build, test, lint and serve the application.
 
-   ```bash
-    npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+**FOLDER STRUCTURE**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- `src`: The main directory of the application.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+  - `app`: Folder based routing directory.
 
-## Get a fresh project
+  - `assets`: Images, fonts, sounds, etc.
 
-When you're ready, run:
+  - `components`: Reusable React components.
+
+  - `config`: Shared configuration values.
+
+  - `hooks`: Reusable hooks.
+
+  - `types`: Global and local typings.
+
+  - `utils`: Helpers and reusable methods.
+
+---
+
+**GETTING STARTED**
 
 ```bash
-npm run reset-project
+# Clone Repo
+git clone git@github.com:thedevenvironment/expo-router-typescript.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+```bash
+# Install Dependencies
+npm run setup
+```
 
-## Learn more
+```bash
+# Start The Dev Server
+npm run dev
 
-To learn more about developing your project with Expo, look at the following resources:
+# Press 's' to switch to dev build
+# Press 'a' to open Android simulator
+# Press 'i' to open iOS simulator
+# Press 'w' to open web browser
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+**LEARN MORE**
 
-Join our community of developers creating universal apps.
+[Expo Documentation](https://docs.expo.dev/tutorial/introduction/)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+[Expo Router Documentation](https://expo.github.io/router/docs/)
+
+[React Navigation Documentation](https://reactnavigation.org/docs/getting-started)
