@@ -1,18 +1,16 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-} from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import React, { useState } from "react";
 import { Loading, CustomTextInput, CustomButton } from "@/src/components";
 import { useSelector, useDispatch } from "react-redux";
-import { setEmail, setPassword, setLoading } from "@/src/redux/userSlice";
-import {login} from "@/src/redux/userSlice";
+import { setLoading } from "@/src/redux/userSlice";
+import { login } from "@/src/redux/userSlice";
 
 const Loginpage = ({ navigation }: { navigation: any }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // userSlice içerisindeki verileri almak için useSelector kullanılır.
-  const {email, password, loading}  = useSelector((state: any) => state.user);
+  const { loading } = useSelector((state: any) => state.user);
 
   // userSlice içerisindeki verileri değiştirmek için useDispatch kullanılır.
   const dispatch = useDispatch();
@@ -27,7 +25,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleOnChangeText={(text)=>dispatch(setEmail(text))}
+        handleOnChangeText={(text) => setEmail(text)}
         handleValue={email}
         handlePlaceholder="Enter your email"
       />
@@ -35,7 +33,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
       <CustomTextInput
         title="Password"
         isSecureText={true}
-        handleOnChangeText={(password)=>dispatch(setPassword(password))}
+        handleOnChangeText={(password) => setPassword(password)}
         handleValue={password}
         handlePlaceholder="Enter your password"
       />
@@ -44,7 +42,7 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         title="Login"
         setWidth="80%"
         handleOnPress={() => {
-          dispatch(login({email, password}) as any);
+          dispatch(login({ email, password }) as any);
         }}
         buttonColor="blue"
         pressetButtonColor="gray"
@@ -60,9 +58,9 @@ const Loginpage = ({ navigation }: { navigation: any }) => {
         pressetButtonColor="lightgray"
       />
 
-      {loading ? <Loading setLoading={
-        () => dispatch(setLoading(false))
-      } /> : null}
+      {loading ? (
+        <Loading setLoading={() => dispatch(setLoading(false))} />
+      ) : null}
     </View>
   );
 };

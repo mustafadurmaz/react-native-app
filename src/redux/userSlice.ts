@@ -1,18 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, User } from "firebase/auth";
+import app from '../../firebaseConfig';
 
 export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }: { email: string, password: string }) => {
+    console.log("email", email);
+    console.log("password", password);
+    
     try {
-      const auth = getAuth();
+      const auth = getAuth(app);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const user = userCredential.user;
-      const token = await user.getIdToken();
+
+      const user:any = userCredential.user;
+      // const token = await user.getIdToken();
+      const token= user.stsTokenManager.accessToken;
 
       const userData = {
         token,
@@ -28,8 +34,6 @@ export const login = createAsyncThunk(
 );
 
 const initialState = {
-  email: null,
-  password: null,
   loading: false,
   isAuth: false,
   token: null,
@@ -41,12 +45,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setEmail: (state, action) => {
-      state.email = action.payload;
-    },
-    setPassword: (state, action) => {
-      state.password = action.payload;
-    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -72,7 +70,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setEmail, setPassword, setLoading } =
+export const { setLoading } =
   userSlice.actions;
 
 export default userSlice.reducer;
