@@ -6,6 +6,7 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
@@ -37,7 +38,21 @@ const HomePage = () => {
     });
   };
 
- 
+  // Firestore'dan veri silme işlemi
+
+  const deleteData = async (id: string) => {
+    await deleteDoc(doc(db, "reactNativeLesson", id));
+  };
+
+  // Firestore'dan veri güncelleme işlemi
+
+  const updateData = async (id: string) => {
+    await updateDoc(doc(db, "reactNativeLesson", id), {
+      title: "Zero to Hero",
+      content: "React Native is awesome",
+      lesson: 100,
+    });
+  };
   return (
     <View style={styles.container}>
       <Text>HomePage</Text>
@@ -54,6 +69,20 @@ const HomePage = () => {
         buttonColor="blue"
         pressetButtonColor="gray"
         handleOnPress={getData}
+      />
+      <CustomButton
+        title={"Delete Data"}
+        setWidth={"40%"}
+        buttonColor="blue"
+        pressetButtonColor="gray"
+        handleOnPress={() => deleteData("25WAeE04f1ZTw29m4NDo")}
+      />
+      <CustomButton
+        title={"Update Data"}
+        setWidth={"40%"}
+        buttonColor="blue"
+        pressetButtonColor="gray"
+        handleOnPress={() => updateData("1BET5pfxdc8kBs0vXtYQ")}
       />
     </View>
   );
