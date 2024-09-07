@@ -31,11 +31,17 @@ const HomePage = () => {
   // Firestore'dan veri çekme işlemi
 
   const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
-    querySnapshot.forEach((doc) => {
-      // console.log(`${doc.id} => ${doc.data()}`);
-      setData([...data, doc.data()]);
-    });
+    const allData: any = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
+      querySnapshot.forEach((doc) => {
+        // console.log(`${doc.id} => ${doc.data()}`);
+        allData.push(doc.data());
+      });
+      return allData;
+    } catch (error) {
+      console.log("Error getting documents: ", error);
+    }
   };
 
   // Firestore'dan veri silme işlemi
