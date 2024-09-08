@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   collection,
   addDoc,
@@ -13,7 +13,12 @@ import { CustomButton } from "../components";
 
 const HomePage = () => {
   const [data, setData] = useState<any>([]);
-  console.log("data", data);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  console.log("isSaved", isSaved);
+
+  useEffect(() => {
+    getData();
+  }, [isSaved]);
 
   // Firestore'a veri gönderme işlemi
   const sendData = async () => {
@@ -21,7 +26,7 @@ const HomePage = () => {
       const docRef = await addDoc(collection(db, "reactNativeLesson"), {
         title: "Zero to Hero",
         content: "React Native is awesome",
-        lesson: 95,
+        lesson: Math.floor(Math.random() * 100) + 1,
       });
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -38,7 +43,9 @@ const HomePage = () => {
         // console.log(`${doc.id} => ${doc.data()}`);
         allData.push(doc.data());
       });
-      return allData;
+      console.log("allData", allData);
+
+      setData(allData);
     } catch (error) {
       console.log("Error getting documents: ", error);
     }
@@ -56,18 +63,30 @@ const HomePage = () => {
     await updateDoc(doc(db, "reactNativeLesson", id), {
       title: "Zero to Hero",
       content: "React Native is awesome",
-      lesson: 100,
+      lesson: 100
     });
   };
   return (
     <View style={styles.container}>
-      <Text>HomePage</Text>
+      {data.map((value: any, index: number) => {
+        return (
+          <View key={index}>
+            <Text>{index}</Text>
+            <Text>{value.title}</Text>
+            <Text>{value.content}</Text>
+            <Text>{value.lesson}</Text>
+          </View>
+        );
+      })}
       <CustomButton
         title={"Save"}
         setWidth={"40%"}
         buttonColor="blue"
         pressetButtonColor="gray"
-        handleOnPress={sendData}
+        handleOnPress={() => {
+          sendData();
+          setIsSaved((isSaved) => !isSaved);
+        }}
       />
       <CustomButton
         title={"Get Data"}
