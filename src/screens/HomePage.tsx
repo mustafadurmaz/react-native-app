@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   collection,
@@ -41,7 +41,7 @@ const HomePage = () => {
       const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
       querySnapshot.forEach((doc) => {
         // console.log(`${doc.id} => ${doc.data()}`);
-        allData.push(doc.data());
+        allData.push({...doc.data(), id: doc.id});
       });
       console.log("allData", allData);
 
@@ -54,7 +54,14 @@ const HomePage = () => {
   // Firestore'dan veri silme işlemi
 
   const deleteData = async (id: string) => {
-    await deleteDoc(doc(db, "reactNativeLesson", id));
+    try {
+      await deleteDoc(doc(db, "reactNativeLesson", id));
+      console.log("Document successfully deleted!");
+      
+    } catch (error) {
+      
+    }
+    
   };
 
   // Firestore'dan veri güncelleme işlemi
@@ -70,12 +77,18 @@ const HomePage = () => {
     <View style={styles.container}>
       {data.map((value: any, index: number) => {
         return (
-          <View key={index}>
+          <Pressable onPress={
+            () => {
+              deleteData(value.id);
+              setIsSaved((isSaved) => !isSaved);
+            }
+          } key={index}>
             <Text>{index}</Text>
+            <Text>{value.id}</Text>
             <Text>{value.title}</Text>
             <Text>{value.content}</Text>
             <Text>{value.lesson}</Text>
-          </View>
+          </Pressable>
         );
       })}
       <CustomButton
