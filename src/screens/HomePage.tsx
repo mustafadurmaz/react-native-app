@@ -10,11 +10,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 
 const HomePage = () => {
   const [data, setData] = useState<any>([]);
   const [isSaved, setIsSaved] = useState<boolean>(false);
-  console.log("isSaved", isSaved);
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
@@ -73,6 +76,13 @@ const HomePage = () => {
       lesson: 100
     });
   };
+
+  // Kullanıcı çıkış işlemleri
+
+  const handleLogout = () => {
+    dispatch(logout() as any);
+  };
+
   return (
     <View style={styles.container}>
       {data.map((value: any, index: number) => {
@@ -121,6 +131,13 @@ const HomePage = () => {
         buttonColor="blue"
         pressetButtonColor="gray"
         handleOnPress={() => updateData("1BET5pfxdc8kBs0vXtYQ")}
+      />
+      <CustomButton
+        title={"LOGOUT"}
+        setWidth={"40%"}
+        buttonColor="red"
+        pressetButtonColor="gray"
+        handleOnPress={handleLogout}
       />
     </View>
   );
