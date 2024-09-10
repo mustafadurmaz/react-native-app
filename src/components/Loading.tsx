@@ -8,14 +8,14 @@ import {
 } from "react-native";
 
 type Props = {
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Loading = ({ setLoading }: Props) => {
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={() => setLoading(false)}
+        onPress={() => setLoading && setLoading(false)}
         style={styles.closeButtonContainer}
       >
         <Text style={styles.closeButton}>X</Text>

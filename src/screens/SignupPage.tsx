@@ -10,13 +10,28 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
-import { CustomTextInput, CustomButton } from "../components";
+import { CustomTextInput, CustomButton, Loading } from "../components";
 import { NavigationProp } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { register} from "../redux/userSlice";
 
 const SignupPage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
+  const {loading} = useSelector((state: any) => state.user);
+
+  const handleRegister = () => {
+    dispatch(register({email, password}) as any);
+  }
+
+  if(loading) {
+    return <Loading />
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView contentContainerStyle={styles.scrollViewContent}> */}
@@ -55,9 +70,7 @@ const SignupPage = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <CustomButton
           title="Sign Up"
           setWidth="80%"
-          handleOnPress={() => {
-            console.log("Sign up button pressed" + name + email + password);
-          }}
+          handleOnPress={handleRegister}
           buttonColor="blue"
           pressetButtonColor="gray"
         />
