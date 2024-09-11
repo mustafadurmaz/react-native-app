@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   collection,
@@ -16,7 +16,7 @@ import { logout } from "../redux/userSlice";
 const HomePage = () => {
   const [data, setData] = useState<any>([]);
   const [isSaved, setIsSaved] = useState<boolean>(false);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const HomePage = () => {
       const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
       querySnapshot.forEach((doc) => {
         // console.log(`${doc.id} => ${doc.data()}`);
-        allData.push({...doc.data(), id: doc.id});
+        allData.push({ ...doc.data(), id: doc.id });
       });
       console.log("allData", allData);
 
@@ -60,11 +60,7 @@ const HomePage = () => {
     try {
       await deleteDoc(doc(db, "reactNativeLesson", id));
       console.log("Document successfully deleted!");
-      
-    } catch (error) {
-      
-    }
-    
+    } catch (error) {}
   };
 
   // Firestore'dan veri güncelleme işlemi
@@ -73,7 +69,7 @@ const HomePage = () => {
     await updateDoc(doc(db, "reactNativeLesson", id), {
       title: "Zero to Hero",
       content: "React Native is awesome",
-      lesson: 100
+      lesson: 100,
     });
   };
 
@@ -83,24 +79,25 @@ const HomePage = () => {
     dispatch(logout() as any);
   };
 
+  const renderItem = ({ item }: { item: any }) => {
+    return (
+      <View>
+        <Text>{item.id}</Text>
+        <Text>{item.title}</Text>
+        <Text>{item.content}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      {data.map((value: any, index: number) => {
-        return (
-          <Pressable onPress={
-            () => {
-              deleteData(value.id);
-              setIsSaved((isSaved) => !isSaved);
-            }
-          } key={index}>
-            <Text>{index}</Text>
-            <Text>{value.id}</Text>
-            <Text>{value.title}</Text>
-            <Text>{value.content}</Text>
-            <Text>{value.lesson}</Text>
-          </Pressable>
-        );
-      })}
+
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
+
       <CustomButton
         title={"Save"}
         setWidth={"40%"}
