@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import {
   collection,
@@ -12,6 +19,7 @@ import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
+import Animated, { BounceIn } from "react-native-reanimated";
 
 const HomePage = () => {
   const [data, setData] = useState<any>([]);
@@ -79,21 +87,24 @@ const HomePage = () => {
     dispatch(logout() as any);
   };
 
-  const renderItem = ({ item }: { item: any }) => {
+  const renderItem = ({ item, index }: { item: any; index: any }) => {
     return (
-      <View>
+      <Animated.View
+        style={styles.flatListContainer}
+        entering={BounceIn.delay(100 * (index + 1))}
+      >
         <Text>{item.id}</Text>
         <Text>{item.title}</Text>
         <Text>{item.content}</Text>
-      </View>
+      </Animated.View>
     );
   };
 
   return (
-    <View style={styles.container}>
-
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={data}
+        style={styles.flatList}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
@@ -136,7 +147,7 @@ const HomePage = () => {
         pressetButtonColor="gray"
         handleOnPress={handleLogout}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -148,5 +159,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "tomato",
+  },
+  flatListContainer: {
+    borderWidth: 1,
+    marginVertical: 5,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  flatList: {
+    width: "90%",
+    backgroundColor: "white",
+    padding: 10,
   },
 });
