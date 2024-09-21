@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   SafeAreaView,
+  TextInput
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -24,6 +25,7 @@ import Animated, { BounceIn } from "react-native-reanimated";
 const HomePage = () => {
   const [data, setData] = useState<any>([]);
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [updateTheData, setUpdateTheData] = useState<string>("");
 
   const dispatch = useDispatch();
 
@@ -102,6 +104,7 @@ const HomePage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>To Do List</Text>
       <FlatList
         data={data}
         style={styles.flatList}
@@ -109,7 +112,7 @@ const HomePage = () => {
         renderItem={renderItem}
       />
 
-      <CustomButton
+      {/* <CustomButton
         title={"Save"}
         setWidth={"40%"}
         buttonColor="blue"
@@ -118,7 +121,7 @@ const HomePage = () => {
           sendData();
           setIsSaved((isSaved) => !isSaved);
         }}
-      />
+      /> */}
       <CustomButton
         title={"Get Data"}
         setWidth={"40%"}
@@ -126,26 +129,39 @@ const HomePage = () => {
         pressetButtonColor="gray"
         handleOnPress={getData}
       />
-      <CustomButton
+      {/* <CustomButton
         title={"Delete Data"}
         setWidth={"40%"}
         buttonColor="blue"
         pressetButtonColor="gray"
         handleOnPress={() => deleteData("25WAeE04f1ZTw29m4NDo")}
-      />
-      <CustomButton
+      /> */}
+      {/* <CustomButton
         title={"Update Data"}
         setWidth={"40%"}
         buttonColor="blue"
         pressetButtonColor="gray"
         handleOnPress={() => updateData("1BET5pfxdc8kBs0vXtYQ")}
-      />
-      <CustomButton
+      /> */}
+      {/* <CustomButton
         title={"LOGOUT"}
         setWidth={"40%"}
         buttonColor="red"
         pressetButtonColor="gray"
         handleOnPress={handleLogout}
+      /> */}
+
+      <TextInput
+        value={updateTheData}
+        onChangeText={(text) => setUpdateTheData(text)}
+        placeholder="enter your data"
+        style={{
+          borderWidth: 1,
+          width: "50%",
+          paddingVertical: 10,
+          textAlign: "center",
+          marginBottom: 30,
+        }}
       />
     </SafeAreaView>
   );
@@ -171,5 +187,10 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     padding: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "blue"
   },
 });
